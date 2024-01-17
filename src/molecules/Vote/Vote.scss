@@ -1,0 +1,32 @@
+.vote {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 1rem;
+  background: #f4f6f9;
+  justify-content: space-around;
+  align-items: center;
+  height: 120px;
+  border-radius: 6px;
+
+  &__counter {
+    color: #5357b9;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  button {
+    border: unset;
+    outline: none;
+  }
+
+  .icon {
+    height: 11px;
+    cursor: pointer;
+
+    &:hover {
+      path {
+        fill: #5357b9;
+      }
+    }
+  }
+}

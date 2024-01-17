@@ -1,0 +1,28 @@
+.add-comment {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    max-width: 700px;
+    height: 200px;
+    padding: 2rem;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    align-items: flex-start;
+
+    &__avatar {
+        flex: 64px 0 0;
+        border-radius: 50%;
+        height: 64px;
+    }
+
+    &__texarea {
+        flex: auto 1 0;
+    }
+
+    &__button {
+        flex: 20% 1 0;
+    }
+}

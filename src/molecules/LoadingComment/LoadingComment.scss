@@ -1,0 +1,76 @@
+  .loading-comment {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    height: 200px;
+    padding: 2rem;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+
+    &__vote,
+    &__body--topbar,
+    &__body--text {
+        background: #d1d3dd;
+        border-radius: 6px;
+    }
+
+    &__vote {
+        flex: 10% 0 0;
+    }
+
+    &__body {
+        flex: 90% 1 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+
+        &--topbar {
+            flex: 20% 0 0;
+        }
+        &--text {
+            flex-grow: 1;
+        }
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        transform: rotate(30deg);
+        
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(
+          to right, 
+          rgba(255, 255, 255, 0.13) 0%,
+          rgba(255, 255, 255, 0.13) 77%,
+          rgba(255, 255, 255, 0.5) 92%,
+          rgba(255, 255, 255, 0.0) 100%
+        );
+        animation: 2s linear infinite forwards shine;
+      }
+      
+      /* Hover state - trigger effect */
+      
+      
+  }
+
+  @keyframes shine {
+    0% { 
+        top: -110%;
+        left: -500%;
+    }
+    60% {
+        top: -30%;
+        left: 150%;
+    }
+    100% {
+        top: -30%;
+        left: 150%;
+    }
+  }
