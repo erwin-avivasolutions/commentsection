@@ -24,13 +24,13 @@
     gap: 1rem;
 
     button {
-        display: flex;
-        flex: 50% 1 0;
-        justify-content: center;
+      display: flex;
+      flex: 50% 1 0;
+      justify-content: center;
     }
   }
 
   &::backdrop {
-    background: rgba(0,0,0,0.5)
+    background: rgba(0, 0, 0, 0.5);
   }
 }

@@ -1,34 +1,33 @@
 .button {
-    padding: 0.75rem 1.5rem;
-    transition: background .2s linear;
-    color: #f5f6fa;
-    outline: none;
-    border: unset;
-    text-transform: uppercase;
-    border-radius: 6px;
-    cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  transition: background 0.2s linear;
+  color: #f5f6fa;
+  border: unset;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
 
-    &.primary {
-        background: #5357B9;
+  &.primary {
+    background: #5357b9;
 
-        &:hover {
-            background: lighten(#5357B9, 20%);
-        }
+    &:hover {
+      background: lighten(#5357b9, 20%);
     }
+  }
 
-    &.secondary {
-        background: #EE6368;
+  &.secondary {
+    background: #ee6368;
 
-        &:hover {
-            background: lighten(#EE6368, 20%);
-        }
+    &:hover {
+      background: lighten(#ee6368, 20%);
     }
+  }
 
-    &.tertiary {
-        background: #68727E;
+  &.tertiary {
+    background: #68727e;
 
-        &:hover {
-            background: lighten(#68727E, 20%);
-        }
+    &:hover {
+      background: lighten(#68727e, 20%);
     }
+  }
 }

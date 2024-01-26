@@ -1,33 +1,32 @@
 .comment-action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    padding-left: 1.5rem;
-    outline: none;
-    border: unset;
-    background: transparent;
-    cursor: pointer;
-    transition: opacity .2s linear;
-    margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 1.5rem;
+  border: unset;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+  margin-left: auto;
 
-    &.delete {
-        color: #EE6368;
-    }
+  &.delete {
+    color: #ee6368;
+  }
 
-    &.edit, 
-    &.reply {
-        color: #5357B9;
-    }
+  &.edit,
+  &.reply {
+    color: #5357b9;
+  }
 
-    span {
-        font-weight: 600;
-        padding-left: 0.5rem;
-        font-size: 1.1rem;
-        line-height: 1.3rem;
-    }
+  span {
+    font-weight: 600;
+    padding-left: 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+  }
 
-    &:hover {
-       opacity: 0.7;
-    }
+  &:hover {
+    opacity: 0.7;
+  }
 }

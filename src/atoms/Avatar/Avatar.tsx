@@ -1,14 +1,13 @@
-import React from 'react';
-import './Avatar.scss';
+import "./Avatar.scss";
 
 type AvatarProps = {
-    imgUrl: string,
-}
+  imgUrl: string;
+};
 
-export function Avatar({imgUrl}: AvatarProps) {
-    return (
-        <div className='avatar'>
-            <img src={imgUrl} />
-        </div>
-    )
+export function Avatar({ imgUrl }: AvatarProps) {
+  return (
+    <div className="avatar">
+      <img src={imgUrl} />
+    </div>
+  );
 }

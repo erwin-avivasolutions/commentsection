@@ -1,14 +1,9 @@
-import React from 'react';
-import './Label.scss';
+import "./Label.scss";
 
 type LabelProps = {
-    text: string
-}
+  text: string;
+};
 
-export function Label({text}: LabelProps) {
-    return (
-        <span className='label'>
-            {text}
-        </span>
-    )
+export function Label({ text }: LabelProps) {
+  return <span className="label">{text}</span>;
 }
