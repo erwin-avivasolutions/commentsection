@@ -71,11 +71,7 @@ export function CommentSection({}) {
       }
 
       if (comment.replies !== null && comment.replies.length > 0) {
-        return (comment.replies = comment.replies.filter((reply) => {
-          if (reply.id !== key) {
-            return true;
-          }
-        }));
+        comment.replies = comment.replies.filter((reply) => reply.id !== key);
       }
 
       return true;

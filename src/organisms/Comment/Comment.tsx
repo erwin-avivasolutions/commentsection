@@ -30,7 +30,7 @@ export function Comment({
   onUpdate,
   onReply,
 }: CommentProps) {
-  let username = null;
+  var username = null;
   const LS = localStorage.getItem("currentUser");
   if (LS !== null) {
     username = JSON.parse(LS).username;
@@ -102,6 +102,7 @@ export function Comment({
             type="secondary"
             text="Yes, delete"
             onClick={() => {
+              openModal();
               onDelete(data.id);
             }}
           />
