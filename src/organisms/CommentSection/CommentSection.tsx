@@ -27,7 +27,7 @@ export type Reply = Exclude<CommentData, "replies"> & {
 
 export function CommentSection({}) {
   //todo get comments first
-  const handleFetchComments = useEffect(() => {
+  useEffect(() => {
     fetchCommentData();
   }, []);
   const [loading, setLoading] = useState<boolean>(true);
@@ -50,7 +50,7 @@ export function CommentSection({}) {
       }
 
       const data = await response.json();
-      let sortedComments = data.comments.sort(
+      var sortedComments = data.comments.sort(
         (a: CommentData, b: CommentData) => {
           return a.score > b.score ? -1 : 1;
         }
@@ -65,7 +65,7 @@ export function CommentSection({}) {
   }
 
   function deleteComment(key: number) {
-    let newComments = comments.filter((comment) => {
+    var newComments = comments.filter((comment) => {
       if (comment.id === key) {
         return false;
       }
@@ -99,7 +99,7 @@ export function CommentSection({}) {
         user: currentUser,
         replyingTo: replyingTo,
       };
-      let newComments = comments.map((comment) => {
+      var newComments = comments.map((comment) => {
         if (comment.id === parentKey) {
           comment.replies.push(newComment as Reply);
         } else if (comment.replies.length > 0) {
@@ -130,7 +130,7 @@ export function CommentSection({}) {
   }
 
   function updateCount(key: number | [], newCount: number) {
-    let newComments = comments.map((comment) => {
+    var newComments = comments.map((comment) => {
       if (comment.id === key) {
         comment.score = newCount;
       } else if (comment.replies !== null && comment.replies.length > 0) {

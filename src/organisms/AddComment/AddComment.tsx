@@ -14,16 +14,12 @@ type AddCommentProps = {
     replyingTo?: string,
     parentKey?: number | undefined
   ) => void;
-  parentKey?: number;
-  replyingTo?: string;
 };
 
 export function AddComment({
   value,
   setValue,
   onCreateComment,
-  parentKey,
-  replyingTo,
 }: AddCommentProps) {
   useEffect(() => fetchUserData(), []);
   const [user, setUser] = useState<User | null>(null);
@@ -49,11 +45,11 @@ export function AddComment({
   return (
     <div className="add-comment">
       <Avatar imgUrl={user.image.png} />
-      <Textarea value={value} setValue={setValue} />
+      <Textarea value={value} onChange={setValue} />
       <Button
         type="primary"
         text="Send"
-        onPress={() => {
+        onClick={() => {
           startCreation();
         }}
       />

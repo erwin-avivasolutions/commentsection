@@ -3,16 +3,16 @@ import "./Textarea.scss";
 
 type TextareaProps = {
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  onChange: (value: string) => void;
 };
 
-export function Textarea({ value, setValue }: TextareaProps) {
+export function Textarea({ value, onChange }: TextareaProps) {
   return (
     <textarea
       className="textarea"
       value={value}
       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.target.value);
+        onChange(e.target.value);
       }}
     ></textarea>
   );

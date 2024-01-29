@@ -67,7 +67,7 @@ export function Comment({
   }
 
   function onUpdatePress() {
-    let withoutName = content.split(" ").slice(1).join(" ");
+    var withoutName = content.split(" ").slice(1).join(" ");
     data.content = withoutName;
 
     onUpdate(data);
@@ -76,7 +76,7 @@ export function Comment({
 
   function onReplyStart(content: string, currentUser: User) {
     console.log("test");
-    let withoutName = content.split(" ").slice(1).join(" ");
+    var withoutName = content.split(" ").slice(1).join(" ");
     onReply(withoutName, currentUser, data.user.username, data.id);
     setCommentText(`@${data.user.username}`);
     setOpenReply(!openReply);
@@ -94,14 +94,14 @@ export function Comment({
           <Button
             type="tertiary"
             text="No, cancel"
-            onPress={() => {
+            onClick={() => {
               openModal();
             }}
           />
           <Button
             type="secondary"
             text="Yes, delete"
-            onPress={() => {
+            onClick={() => {
               onDelete(data.id);
             }}
           />
@@ -149,11 +149,11 @@ export function Comment({
           <div className="comment__body--text">
             {editState === true ? (
               <>
-                <Textarea value={content} setValue={setContent} />
+                <Textarea value={content} onChange={setContent} />
                 <Button
                   type="primary"
                   text="Update"
-                  onPress={() => {
+                  onClick={() => {
                     onUpdatePress();
                   }}
                 />

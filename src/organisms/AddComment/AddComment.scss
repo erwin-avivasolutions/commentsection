@@ -13,16 +13,15 @@
   align-items: flex-start;
 
   &__avatar {
-    flex: 64px 0 0;
     border-radius: 50%;
     height: 64px;
   }
 
   &__texarea {
-    flex: auto 1 0;
+    flex-grow: 1;
   }
 
   &__button {
-    flex: 20% 1 0;
+    flex-basis: 20%;
   }
 }

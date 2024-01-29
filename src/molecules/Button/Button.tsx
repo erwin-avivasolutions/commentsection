@@ -1,19 +1,17 @@
+import { clsx } from "clsx";
 import "./Button.scss";
 
 type ButtonProps = {
   text: string;
   type: "primary" | "secondary" | "tertiary";
-  onPress: () => void;
+  onClick: () => void;
 };
 
-export function Button({ text, type, onPress }: ButtonProps) {
+export function Button({ text, type, onClick }: ButtonProps) {
+  const buttonClass = clsx("button", type);
+
   return (
-    <button
-      className={`button ${type}`}
-      onClick={() => {
-        onPress();
-      }}
-    >
+    <button type="button" className={buttonClass} onClick={onClick}>
       {text}
     </button>
   );
