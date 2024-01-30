@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Textarea } from "../../molecules/Textarea/Textarea";
 import { Avatar } from "../../atoms/Avatar/Avatar";
 import { Button } from "../../molecules/Button/Button";
-import { User } from "../CommentSection/CommentSection";
+import { AuthContext, User } from "../CommentSection/CommentSection";
 import "./AddComment.scss";
 
 type AddCommentProps = {
@@ -21,25 +21,16 @@ export function AddComment({
   setValue,
   onCreateComment,
 }: AddCommentProps) {
-  useEffect(() => fetchUserData(), []);
-  const [user, setUser] = useState<User | null>(null);
-
-  function fetchUserData() {
-    const data = localStorage.getItem("currentUser");
-
-    if (data !== null) {
-      setUser(JSON.parse(data));
-    }
-  }
-
-  if (user === null) {
-    return <></>;
-  }
+  const user = useContext(AuthContext);
 
   function startCreation() {
     if (user !== null) {
       onCreateComment(value, user);
     }
+  }
+
+  if (user === null) {
+    return <></>;
   }
 
   return (

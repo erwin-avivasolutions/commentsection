@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { CommentData, Reply, User } from "../CommentSection/CommentSection";
+import { useContext, useState } from "react";
+import {
+  AuthContext,
+  CommentData,
+  Reply,
+  User,
+} from "../CommentSection/CommentSection";
 import "./Comment.scss";
 import { Vote } from "../../molecules/Vote/Vote";
 import { CommentAction } from "../../molecules/CommentAction/CommentAction";
 import { Icon } from "../../atoms/Icon/Icon";
 import { AddComment } from "../AddComment/AddComment";
-import { Modal } from "../Modal/Modal";
+import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
 import { Button } from "../../molecules/Button/Button";
 import { Avatar } from "../../atoms/Avatar/Avatar";
 import { Textarea } from "../../molecules/Textarea/Textarea";
+import { CommentTopbar } from "../CommentTopbar/CommentTopbar";
+import { CommentReplies } from "../CommentReplies/CommentReplies";
+import { CommentBody } from "../CommentBody/CommentBody";
 
 type CommentProps = {
   data: CommentData | Reply;
@@ -30,21 +38,14 @@ export function Comment({
   onUpdate,
   onReply,
 }: CommentProps) {
+  const currentUser = useContext(AuthContext);
   var username = null;
-  const LS = localStorage.getItem("currentUser");
-  if (LS !== null) {
-    username = JSON.parse(LS).username;
+  if (currentUser !== null) {
+    username = currentUser.username;
   }
 
   const [openReply, setOpenReply] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [content, setContent] = useState(
-    `${
-      (data as Reply).replyingTo !== undefined &&
-      "@" + (data as Reply).replyingTo
-    } ${data.content}`
-  );
-  const [showReplies, setShowReplies] = useState(false);
   const [editState, setEditState] = useState(false);
   const [commentText, setCommentText] = useState<string>(
     `@${data.user.username}`
@@ -66,7 +67,7 @@ export function Comment({
     onCountChange(data.id, newCount);
   }
 
-  function onUpdatePress() {
+  function onUpdatePress(content: string) {
     var withoutName = content.split(" ").slice(1).join(" ");
     data.content = withoutName;
 
@@ -75,7 +76,6 @@ export function Comment({
   }
 
   function onReplyStart(content: string, currentUser: User) {
-    console.log("test");
     var withoutName = content.split(" ").slice(1).join(" ");
     onReply(withoutName, currentUser, data.user.username, data.id);
     setCommentText(`@${data.user.username}`);
@@ -84,92 +84,28 @@ export function Comment({
 
   return (
     <>
-      <Modal isOpen={isModalOpen} openModal={openModal}>
-        <h3>Delete comment?</h3>
-        <p>
-          Are you sure you want to delete this comment? This will remove the
-          comment and can't be undone
-        </p>
-        <div className="modal__buttons">
-          <Button
-            type="tertiary"
-            text="No, cancel"
-            onClick={() => {
-              openModal();
-            }}
-          />
-          <Button
-            type="secondary"
-            text="Yes, delete"
-            onClick={() => {
-              openModal();
-              onDelete(data.id);
-            }}
-          />
-        </div>
-      </Modal>
+      <ConfirmationDialog
+        isOpen={isModalOpen}
+        id={data.id}
+        openModal={openModal}
+        onDelete={onDelete}
+      />
+
       <div className="comment" key={data.id}>
-        <div className="comment__vote">
-          <Vote score={data.score} onVotePress={onVotePress} />
-        </div>
+        <Vote score={data.score} onVotePress={onVotePress} />
 
         <div className="comment__body">
-          <div className="comment__body--topbar">
-            <Avatar imgUrl={data.user.image.png} />
-            <span className="comment__body--username">
-              {data.user.username}
-            </span>
-            <span className="comment__body--time">{data.createdAt}</span>
-            {username !== null && username === data.user.username ? (
-              <div className="comment__body--actions">
-                <CommentAction
-                  text="Delete"
-                  type="delete"
-                  icon={<Icon type="IconDelete" />}
-                  id={data.id}
-                  onPress={() => openModal()}
-                />
-                <CommentAction
-                  text="Edit"
-                  type="edit"
-                  icon={<Icon type="IconEdit" />}
-                  id={data.id}
-                  onPress={() => onEdit()}
-                />
-              </div>
-            ) : (
-              <CommentAction
-                text="Reply"
-                type="reply"
-                icon={<Icon type="IconReply" />}
-                id={data.id}
-                onPress={() => onOpenReply(data.id)}
-              />
-            )}
-          </div>
-          <div className="comment__body--text">
-            {editState === true ? (
-              <>
-                <Textarea value={content} onChange={setContent} />
-                <Button
-                  type="primary"
-                  text="Update"
-                  onClick={() => {
-                    onUpdatePress();
-                  }}
-                />
-              </>
-            ) : (
-              <div>
-                {(data as Reply).replyingTo !== undefined && (
-                  <span className="comment__body--reply">
-                    @{(data as Reply).replyingTo}{" "}
-                  </span>
-                )}
-                {data.content}
-              </div>
-            )}
-          </div>
+          <CommentTopbar
+            data={data}
+            onEdit={onEdit}
+            onOpenReply={onOpenReply}
+            openModal={openModal}
+          />
+          <CommentBody
+            onUpdatePress={onUpdatePress}
+            editState={editState}
+            data={data}
+          />
         </div>
       </div>
       {openReply && (
@@ -179,40 +115,13 @@ export function Comment({
           setValue={setCommentText}
         />
       )}
-      {data.replies !== null &&
-        data.replies !== undefined &&
-        data.replies.length > 0 && (
-          <>
-            {showReplies === true && (
-              <div className="replies">
-                <div className="separator"></div>
-                <div className="comments">
-                  {data.replies.map((reply: CommentData) => {
-                    return (
-                      <Comment
-                        data={reply as Reply}
-                        key={reply.id}
-                        onCountChange={onCountChange}
-                        onDelete={onDelete}
-                        onUpdate={onUpdate}
-                        onReply={onReply}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-            <div className="open-replies">
-              <hr />
-              <span
-                className="open-replies__text"
-                onClick={() => setShowReplies(!showReplies)}
-              >
-                {showReplies === true ? "Hide replies" : "Show replies"}
-              </span>
-            </div>
-          </>
-        )}
+      <CommentReplies
+        onCountChange={onCountChange}
+        onDelete={onDelete}
+        onUpdate={onUpdate}
+        onReply={onReply}
+        replies={data.replies}
+      />
     </>
   );
 }

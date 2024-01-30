@@ -11,7 +11,7 @@ export function Textarea({ value, onChange }: TextareaProps) {
     <textarea
       className="textarea"
       value={value}
-      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      onChange={(e) => {
         onChange(e.target.value);
       }}
     ></textarea>

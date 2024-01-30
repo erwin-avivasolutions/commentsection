@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { AddComment } from "../AddComment/AddComment";
 import { LoadingComment } from "../../molecules/LoadingComment/LoadingComment";
 import { Comment } from "../Comment/Comment";
 import "./CommentSection.scss";
+
+export const AuthContext = createContext<User | null>(null);
 
 export type User = {
   image: {
@@ -33,6 +35,7 @@ export function CommentSection({}) {
   const [loading, setLoading] = useState<boolean>(true);
   const [comments, setComments] = useState<CommentData[]>([]);
   const [commentText, setCommentText] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   async function fetchCommentData() {
     try {
@@ -56,7 +59,7 @@ export function CommentSection({}) {
         }
       );
       setComments([...sortedComments]);
-      localStorage.setItem("currentUser", JSON.stringify(data.currentUser));
+      setCurrentUser(data.currentUser);
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
@@ -176,7 +179,7 @@ export function CommentSection({}) {
           <LoadingComment />
         </>
       ) : (
-        <>
+        <AuthContext.Provider value={currentUser}>
           {comments.map((comment: CommentData) => {
             return (
               <Comment
@@ -194,7 +197,7 @@ export function CommentSection({}) {
             value={commentText}
             setValue={setCommentText}
           />
-        </>
+        </AuthContext.Provider>
       )}
     </>
   );
